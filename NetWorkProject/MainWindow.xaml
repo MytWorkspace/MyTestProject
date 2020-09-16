@@ -1,0 +1,19 @@
+﻿<Window x:Class="NetWorkProject.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NetWorkProject"
+        mc:Ignorable="d" 
+        Title="ccc" Height="450" Width="800">
+    <Grid>
+		<UniformGrid>
+			<Button Content="判断网络是否畅通" Click="Button_Click" />
+			<Button Content="获取ip地址" Click="Button_Click_1" />
+			<Button Content="隐藏进程" Click="Button_Click_2" />
+			<Button Content="获取网络ip地址" Click="Button_Click_3" />
+			<Button Content="获取ip所属的省份" Click="Button_Click_4"  />
+			<Button Content="获取ip所属的省份2" Click="Button_Click_5"  />
+		</UniformGrid>
+    </Grid>
+</Window>
