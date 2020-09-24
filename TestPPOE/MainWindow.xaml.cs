@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using Utility;
 
 namespace TestPPOE
 {
@@ -34,8 +35,6 @@ namespace TestPPOE
 
             this.Closing += MainWindow_Closing;
 
-
-
             this.Loaded += MainWindow_Loaded;
 
             this.SourceInitialized += MainWindow_SourceInitialized; ;
@@ -48,7 +47,7 @@ namespace TestPPOE
             HwndSource.FromHwnd(hwnd).AddHook(new HwndSourceHook(WndProc));
         }
 
-        string temp="";
+        string temp = "";
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
@@ -75,22 +74,20 @@ namespace TestPPOE
             //{
             //    MessageBox.Show("用户点了关闭按纽了");
             //}
-
-
-
             return IntPtr.Zero;
         }
 
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            DispatcherTimer dispatcherTimer = new DispatcherTimer();
-            dispatcherTimer.Interval = TimeSpan.FromSeconds(2);
-            dispatcherTimer.Tick += (ss, ee) =>
-            {
-               
-            };
-            dispatcherTimer.Start();
+            //获取 username password
+            string username = CommonUitity.ReadConfig("username");
+
+            string password = CommonUitity.ReadConfig("password");
+
+            ppoeUserName.Text = username;
+
+            ppoePassWorld.Text = password;
 
         }
 
@@ -98,8 +95,8 @@ namespace TestPPOE
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-          //  e.Cancel = true;
-            //this.Activate();
+
+
         }
 
         public void ActivateVoid()
@@ -115,7 +112,6 @@ namespace TestPPOE
         private void DisConncet_Click(object sender, RoutedEventArgs e)
         {
             Adsl.Disconnect();
-
         }
 
         /// <summary>
@@ -130,12 +126,16 @@ namespace TestPPOE
 
             string ppoeUser = ppoeUserName.Text.Trim();
 
-            string ppoePw = ppoePassWorld.Text.Trim();
+            string ppoePw = ppoePassWorld.Password.Trim();
 
             string meg = "";
             bool result = Adsl.Connect(ppoeN, ppoeUser, ppoePw, ref meg);
             if (result)
             {
+                CommonUitity.SetConfig("username", ppoeUser);
+
+                CommonUitity.SetConfig("password", ppoePw);
+
                 MessageBox.Show("连接成功");
             }
             else
@@ -157,6 +157,6 @@ namespace TestPPOE
             this.Close();
         }
 
-     
+
     }
 }
